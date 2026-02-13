@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  IMAGE_NAME: yourdockerhubusername/yourapp
+  IMAGE_NAME: babybala69/web-git-action-test:v1.0
 
 jobs:
   build-and-push:
