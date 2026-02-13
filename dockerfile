@@ -1,17 +1,12 @@
-# Use an official Nginx base image
-FROM nginx:alpine
+FROM node:20-alpine
 
-# Install git
-RUN apk add --no-cache git
+WORKDIR /app
 
-# Set working directory
-WORKDIR /usr/share/nginx/html
+COPY package*.json ./
+RUN npm install
 
-# Clone the repository into the web root
-RUN git clone https://github.com/your-username/your-repo.git . 
-RUN cp -rf web-page/* /usr/share/nginx/html
-# Expose port 80
-EXPOSE 80
+COPY . .
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+
+CMD ["npm", "start"]
