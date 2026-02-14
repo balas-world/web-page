@@ -7,7 +7,7 @@ on:
       - main
 
 env:
-  IMAGE_NAME: yourdockerhubusername/your-image-name
+  IMAGE_NAME: babybala69/14-18
 
 jobs:
   build:
