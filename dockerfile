@@ -3,10 +3,7 @@ FROM mcr.microsoft.com/dotnet/samples
 # Switch to root to install git
 USER root
 
-# Install git
-RUN apt-get update && \
-    apt-get install -y git && \
-    rm -rf /var/lib/apt/lists/*
+
 
 # Set working directory
 WORKDIR /app
