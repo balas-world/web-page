@@ -4,7 +4,7 @@ FROM nginx:alpine
 # Install git
 RUN apk add --no-cache git
 
-# Set working directory
+# Set working directory000
 WORKDIR /tmp
 
 # Clone your repository
