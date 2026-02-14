@@ -1,24 +1,23 @@
-# Use official nginx image
-FROM nginx:alpine
+FROM mcr.microsoft.com/dotnet/samples
+
+# Switch to root to install git
+USER root
 
 # Install git
-RUN apk add --no-cache git
+RUN apt-get update && \
+    apt-get install -y git && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set working directory000
-WORKDIR /tmp
+# Set working directory
+WORKDIR /app
 
 # Clone your repository
-# Replace with your actual repository URL
-RUN git clone https://github.com/balas-world/web-page.git
+RUN git clone https://github.com/balas-world/web-page.git .
 
-# Remove default nginx html
-RUN rm -rf /usr/share/nginx/html/*
-
-# Move website files to nginx web root
-RUN cp -rf web-page/* /usr/share/nginx/html/
-
-# Expose port 80
+# Expose port 9999
 EXPOSE 80
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Run ASP.NET app on port 9999
+ENV ASPNETCORE_URLS=http://+:80
+
+CMD ["dotnet", "run"]
