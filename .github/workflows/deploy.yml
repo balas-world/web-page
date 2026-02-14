@@ -7,7 +7,7 @@ on:
       - completed
 
 env:
-  IMAGE_NAME: yourdockerhubusername/yourapp
+  IMAGE_NAME: babybala69/14-12-49
   CONTAINER_NAME: myapp
 
 jobs:
