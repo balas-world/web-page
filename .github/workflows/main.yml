@@ -43,28 +43,29 @@ jobs:
           docker push $IMAGE_NAME:latest
 
   deploy:
-  runs-on: self-hosted
-  needs: build
+    needs: build
+    runs-on: self-hosted
+  
 
-  steps:
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Pull Latest Image
-      run: docker pull $IMAGE_NAME:latest
+      - name: Pull Latest Image
+        run: docker pull $IMAGE_NAME:latest
 
-    - name: Stop and Remove Old Container
-      run: |
-        docker stop webapp || true
-        docker rm webapp || true
+      - name: Stop and Remove Old Container
+        run: |
+          docker stop webapp || true
+          docker rm webapp || true
 
-    - name: Run New Container
-      run: |
-        docker run -d \
-          --restart always \
-          --name webapp \
-          -p 80:80 \
-          $IMAGE_NAME:latest
+      - name: Run New Container
+        run: |
+          docker run -d \
+            --restart always \
+            --name webapp \
+            -p 80:80 \
+            $IMAGE_NAME:latest
