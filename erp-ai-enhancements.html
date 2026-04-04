@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise ERP — AI Enhancement Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #7c5cfc;
+    --accent2: #00e5c3;
+    --accent3: #ff6b6b;
+    --accent4: #ffd166;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --tag-bg: rgba(124,92,252,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(124,92,252,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 50%;
+    height: 60%;
+    background: radial-gradient(ellipse, rgba(0,229,195,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .badge {
+    background: var(--tag-bg);
+    border: 1px solid rgba(124,92,252,0.25);
+    color: var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  /* Search / Filter */
+  .controls {
+    max-width: 1300px;
+    margin: 3rem auto 0;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .hero-text {
+    margin-bottom: 2.5rem;
+  }
+  .hero-text h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+  .hero-text h1 em {
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+  }
+  .hero-text p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .filter-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.45rem 1rem;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: 0 0 16px rgba(124,92,252,0.35);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 2rem;
+    padding: 1.2rem 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent2);
+    letter-spacing: -0.03em;
+  }
+  .stat-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* Grid */
+  .grid {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 2rem 5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Module Card */
+  .module-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    position: relative;
+  }
+  .module-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 16px;
+    pointer-events: none;
+  }
+  .module-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(124,92,252,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,92,252,0.15);
+  }
+  .module-card:hover::before { opacity: 1; }
+
+  .card-header {
+    padding: 1.4rem 1.6rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .module-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .card-title-group { flex: 1; }
+  .module-num {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .module-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .impact-badge {
+    font-size: 0.62rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .impact-high { background: rgba(0,229,195,0.12); color: var(--accent2); border: 1px solid rgba(0,229,195,0.2); }
+  .impact-medium { background: rgba(255,209,102,0.12); color: var(--accent4); border: 1px solid rgba(255,209,102,0.2); }
+  .impact-critical { background: rgba(255,107,107,0.12); color: var(--accent3); border: 1px solid rgba(255,107,107,0.2); }
+
+  .card-body { padding: 0 1.6rem 1.4rem; }
+
+  .ai-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .ai-tag {
+    background: var(--tag-bg);
+    border: 1px solid rgba(124,92,252,0.2);
+    color: rgba(180,165,255,0.9);
+    padding: 0.2rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+  }
+
+  .improvement-text {
+    font-size: 0.78rem;
+    color: rgba(200,200,220,0.75);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  .benefits-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.73rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .benefit-item::before {
+    content: '→';
+    color: var(--accent2);
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+    font-size: 0.7rem;
+  }
+
+  .card-footer {
+    border-top: 1px solid var(--border);
+    padding: 0.9rem 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .roi-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .roi-bar-wrap { flex: 1; margin: 0 0.8rem; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+  .roi-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.8s cubic-bezier(0.23,1,0.32,1); }
+  .roi-pct { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent2); }
+
+  /* Expand overlay */
+  .expand-area { display: none; padding: 0 1.6rem 1.4rem; border-top: 1px solid var(--border); margin-top: 0.4rem; }
+  .expand-area.open { display: block; }
+  .expand-area h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+    margin-top: 1rem;
+  }
+  .challenge-item {
+    font-size: 0.72rem;
+    color: rgba(255,107,107,0.8);
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    line-height: 1.5;
+  }
+  .challenge-item::before { content: '⚠'; flex-shrink: 0; }
+
+  .expand-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: gap 0.2s;
+    margin-top: 0.8rem;
+  }
+  .expand-btn:hover { gap: 0.7rem; }
+  .expand-btn .arrow { transition: transform 0.3s; }
+  .expand-btn.open .arrow { transform: rotate(180deg); }
+
+  /* Hidden card for filtering */
+  .module-card.hidden { display: none; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(124,92,252,0.3); border-radius: 3px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .module-card { animation: fadeUp 0.5s both; }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; padding: 0 1rem 4rem; }
+    .controls { padding: 0 1rem; }
+    .hero-text h1 { font-size: 1.8rem; }
+    .stats-bar { gap: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    Enterprise ERP
+  </div>
+  <div class="header-right">
+    <span>AI Enhancement Blueprint</span>
+    <span class="badge">19 Modules</span>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="hero-text">
+    <h1>Your ERP,<br><em>reimagined</em> with AI</h1>
+    <p>A strategic blueprint for integrating artificial intelligence across all 19 Enterprise modules — from automation to predictive analytics.</p>
+  </div>
+
+  <div class="filter-row" id="filterRow">
+    <button class="filter-btn active" data-filter="all">All Modules</button>
+    <button class="filter-btn" data-filter="critical">🔴 Critical Impact</button>
+    <button class="filter-btn" data-filter="high">🟢 High Impact</button>
+    <button class="filter-btn" data-filter="medium">🟡 Medium Impact</button>
+    <button class="filter-btn" data-filter="operations">Operations</button>
+    <button class="filter-btn" data-filter="analytics">Analytics</button>
+    <button class="filter-btn" data-filter="customer">Customer-Facing</button>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><span class="stat-num">19</span><span class="stat-label">Modules Enhanced</span></div>
+    <div class="stat-item"><span class="stat-num">47+</span><span class="stat-label">AI Technologies</span></div>
+    <div class="stat-item"><span class="stat-num">85%</span><span class="stat-label">Avg Efficiency Gain</span></div>
+    <div class="stat-item"><span class="stat-num">3x</span><span class="stat-label">Decision Speed</span></div>
+    <div class="stat-item"><span class="stat-num">↓ 60%</span><span class="stat-label">Manual Errors</span></div>
+  </div>
+</div>
+
+<div class="grid" id="moduleGrid"></div>
+
+<script>
+const modules = [
+  {
+    id: 1, name: "Point of Sale (P.O.S)", icon: "🛒",
+    color: "#7c5cfc", impact: "critical", categories: ["operations","customer"],
+    aiTech: ["Computer Vision", "NLP", "Predictive ML", "Anomaly Detection"],
+    improvement: "AI transforms P.O.S into an intelligent sales engine. Real-time computer vision can handle cashier-less checkout flows, while NLP enables voice-driven order entry. Fraud is detected in milliseconds via anomaly models, and dynamic pricing adjusts based on demand signals.",
+    benefits: ["30% faster checkout via smart queue prediction", "Fraud detection with 99.1% accuracy", "Personalized upsell suggestions per customer", "Real-time demand-driven pricing"],
+    challenges: ["Customer privacy concerns with facial recognition", "Integration with legacy hardware", "Staff retraining requirements"],
+    roi: 88
+  },
+  {
+    id: 2, name: "Daily Activities", icon: "📋",
+    color: "#00e5c3", impact: "high", categories: ["operations","analytics"],
+    aiTech: ["NLP", "Task Automation (RPA)", "Scheduling AI", "Smart Reminders"],
+    improvement: "An AI-orchestrated daily dashboard that auto-prioritizes tasks based on urgency and context, auto-fills routine reports, and surfaces bottlenecks before they cascade. Voice-activated activity logging eliminates manual data entry.",
+    benefits: ["40% reduction in manual admin time", "Smart alerts prevent task overruns", "Auto-generated daily/weekly summaries", "Contextual task suggestions from past data"],
+    challenges: ["Data quality needed for reliable AI suggestions", "Change management for staff adoption"],
+    roi: 72
+  },
+  {
+    id: 3, name: "Delivery", icon: "🚚",
+    color: "#ffd166", impact: "critical", categories: ["operations","customer"],
+    aiTech: ["Route Optimization AI", "Predictive ETAs", "IoT + ML", "Demand Forecasting"],
+    improvement: "AI dynamically re-routes drivers in real time based on traffic, weather, and order priority. Predictive ETAs are shared with customers automatically. Machine learning forecasts delivery volume spikes, enabling proactive fleet allocation.",
+    benefits: ["Up to 25% fuel cost reduction", "Delivery accuracy improves to 98%+", "Customer satisfaction from live ETA updates", "Fewer missed or late deliveries"],
+    challenges: ["Requires live GPS and traffic data feeds", "Privacy implications of driver tracking"],
+    roi: 92
+  },
+  {
+    id: 4, name: "Call Centre", icon: "🎧",
+    color: "#ff6b6b", impact: "critical", categories: ["customer","analytics"],
+    aiTech: ["Conversational AI", "Sentiment Analysis", "Auto-Summarization", "Intent Classification"],
+    improvement: "AI-powered call routing matches customers to optimal agents instantly. Real-time sentiment analysis flags distressed customers for escalation. After each call, AI auto-generates structured summaries, saving agents 5+ minutes per interaction.",
+    benefits: ["50% reduction in average handle time", "First-call resolution improves by 35%", "Real-time agent coaching via AI prompts", "Automated quality assurance scoring"],
+    challenges: ["Accent and dialect recognition accuracy", "Customer acceptance of AI agents", "Compliance with call recording regulations"],
+    roi: 90
+  },
+  {
+    id: 5, name: "Central Kitchen", icon: "👨‍🍳",
+    color: "#a8ff78", impact: "high", categories: ["operations","analytics"],
+    aiTech: ["Demand Forecasting ML", "IoT Sensors + AI", "Recipe Optimization", "Waste Analytics"],
+    improvement: "AI predicts daily production volumes with precision, reducing over/under-preparation. IoT-connected equipment sends AI alerts for maintenance before failures. Recipe AI suggests ingredient substitutions based on inventory levels and cost targets.",
+    benefits: ["Food waste reduced by up to 40%", "Production costs optimized daily", "Equipment downtime drops with predictive maintenance", "Consistent quality via AI-guided preparation"],
+    challenges: ["IoT hardware investment required", "AI model needs historical sales data to train effectively"],
+    roi: 80
+  },
+  {
+    id: 6, name: "Inventory Management", icon: "📦",
+    color: "#667eea", impact: "critical", categories: ["operations","analytics"],
+    aiTech: ["ML Demand Forecasting", "Automated Reordering", "Computer Vision", "Supply Chain AI"],
+    improvement: "AI continuously monitors stock levels and triggers purchase orders when thresholds are predicted to be breached. Computer vision automates physical stock counts. Supply chain risk models flag supplier disruptions before they impact operations.",
+    benefits: ["Stockouts reduced by 70%", "Overstock holding costs cut by 30%", "Automated PO generation saves 10+ hours/week", "Better supplier negotiation with data insights"],
+    challenges: ["Data integration with supplier systems", "Accuracy of demand models during anomalies"],
+    roi: 95
+  },
+  {
+    id: 7, name: "HR & Payroll", icon: "👥",
+    color: "#f093fb", impact: "high", categories: ["operations","analytics"],
+    aiTech: ["NLP Resume Screening", "Turnover Prediction ML", "Payroll Anomaly Detection", "Workforce Planning AI"],
+    improvement: "AI screens hundreds of applications in seconds, shortlisting candidates by skills match and culture fit. Turnover prediction models identify at-risk employees 3 months in advance. Payroll anomaly detection flags errors before disbursement.",
+    benefits: ["Recruitment cycle cut by 50%", "Proactive retention reduces turnover costs", "Payroll errors near-eliminated", "Data-driven workforce planning"],
+    challenges: ["Bias in AI hiring algorithms — needs regular auditing", "Employee data privacy and consent"],
+    roi: 78
+  },
+  {
+    id: 8, name: "CRM & Sales", icon: "🤝",
+    color: "#4facfe", impact: "critical", categories: ["customer","analytics"],
+    aiTech: ["Lead Scoring AI", "Churn Prediction", "Sales Forecasting ML", "Recommendation Engine"],
+    improvement: "AI ranks leads by conversion probability, letting sales teams focus effort effectively. Churn models flag customers likely to leave, enabling proactive outreach. Personalized product recommendations are auto-generated for each account.",
+    benefits: ["Sales conversion rates up 35%", "Churn reduced through early intervention", "Revenue forecasts with 90%+ accuracy", "Reduced sales cycle length"],
+    challenges: ["Requires clean, unified customer data", "Sales team buy-in and trust in AI recommendations"],
+    roi: 93
+  },
+  {
+    id: 9, name: "Finance & Accounting", icon: "💰",
+    color: "#43e97b", impact: "critical", categories: ["analytics","operations"],
+    aiTech: ["Fraud Detection AI", "Predictive Cash Flow", "OCR + NLP", "Expense Categorization ML"],
+    improvement: "AI auto-processes invoices and receipts via OCR, eliminating manual entry. Fraud detection models monitor every transaction in real time. Predictive cash flow modeling provides 90-day financial visibility for leadership.",
+    benefits: ["Invoice processing time cut by 80%", "Financial fraud flagged in real time", "Accurate cash flow predictions", "Regulatory compliance automated"],
+    challenges: ["High accuracy requirements for financial AI", "Auditability and explainability of AI decisions"],
+    roi: 91
+  },
+  {
+    id: 10, name: "Procurement", icon: "🛍️",
+    color: "#fa709a", impact: "high", categories: ["operations","analytics"],
+    aiTech: ["Supplier Risk AI", "Price Optimization ML", "Contract Analysis NLP", "Spend Analytics"],
+    improvement: "AI evaluates supplier reliability using financial, ESG, and performance data. NLP scans contracts for unfavorable clauses and compliance risks. Spend analytics AI identifies consolidation opportunities and negotiation leverage.",
+    benefits: ["Cost savings of 8-15% through AI negotiation insights", "Supplier risk identified proactively", "Contract compliance automated", "Procurement cycle time reduced by 40%"],
+    challenges: ["Data availability on suppliers varies", "Change management in procurement teams"],
+    roi: 82
+  },
+  {
+    id: 11, name: "Reporting & Analytics", icon: "📊",
+    color: "#00c6ff", impact: "high", categories: ["analytics"],
+    aiTech: ["Natural Language Query (NLQ)", "AutoML", "Anomaly Detection", "Predictive Dashboards"],
+    improvement: "Business users ask questions in plain English and receive instant data visualizations. AI auto-detects anomalies in KPIs and alerts relevant stakeholders. Predictive dashboards show where metrics are trending before they become problems.",
+    benefits: ["Self-service analytics reduces IT dependency", "Insight delivery 10x faster", "Proactive anomaly alerts prevent escalations", "C-suite gets predictive, not just historical, data"],
+    challenges: ["Natural language query accuracy needs tuning", "Data governance and access control complexity"],
+    roi: 85
+  },
+  {
+    id: 12, name: "E-Commerce / Online Orders", icon: "🌐",
+    color: "#f7971e", impact: "critical", categories: ["customer","analytics"],
+    aiTech: ["Personalization Engine", "Dynamic Pricing AI", "Cart Abandonment ML", "Search AI"],
+    improvement: "Every customer sees a personalized homepage, product rankings, and offers. AI-powered search understands intent, not just keywords. Cart abandonment models trigger timely recovery campaigns automatically.",
+    benefits: ["Average order value increases 20-30%", "Conversion rate optimization ongoing", "Recovery of 15% abandoned carts", "Reduced bounce rate via smart search"],
+    challenges: ["A/B testing needed to validate AI recommendations", "Customer data privacy (GDPR etc.)"],
+    roi: 94
+  },
+  {
+    id: 13, name: "Loyalty & Promotions", icon: "🎁",
+    color: "#ee9ca7", impact: "high", categories: ["customer","analytics"],
+    aiTech: ["Segmentation ML", "Offer Optimization AI", "Propensity Modeling", "Lifetime Value Prediction"],
+    improvement: "AI segments customers beyond demographics — by behavior, purchase cycles, and sentiment. Offers are personalized per segment, maximizing redemption rates. CLV models help prioritize which customers to invest in for long-term growth.",
+    benefits: ["Loyalty redemption rates up 40%", "Promotional ROI improves through targeting", "Reduced promotion abuse via anomaly detection", "High-value customer identification and nurture"],
+    challenges: ["Customer data siloing across channels", "Fairness and transparency in offer distribution"],
+    roi: 79
+  },
+  {
+    id: 14, name: "Scheduling & Rostering", icon: "🗓️",
+    color: "#96fbc4", impact: "high", categories: ["operations"],
+    aiTech: ["Demand-Aware Scheduling AI", "Fatigue Risk Models", "Shift Optimization ML", "Auto-Rostering"],
+    improvement: "AI generates compliant, optimized rosters in minutes instead of hours. Demand forecasts drive staffing levels — no more guessing. Fatigue risk algorithms flag unsafe scheduling patterns and suggest swaps proactively.",
+    benefits: ["Scheduling time reduced by 70%", "Labor cost aligned precisely with demand", "Fewer compliance violations", "Improved staff wellbeing through balanced rosters"],
+    challenges: ["Employee preferences must be balanced with business needs", "Labor law variations by region"],
+    roi: 76
+  },
+  {
+    id: 15, name: "Supplier & Vendor Portal", icon: "🤝",
+    color: "#c471ed", impact: "medium", categories: ["operations"],
+    aiTech: ["NLP Document Processing", "Performance Scoring AI", "Chatbot Integration", "Risk Assessment ML"],
+    improvement: "AI automates vendor onboarding by extracting and validating document data. Performance scorecards are generated automatically from delivery, quality, and pricing data. A vendor chatbot answers common queries 24/7.",
+    benefits: ["Vendor onboarding time cut by 60%", "Real-time performance transparency", "Reduced back-and-forth communications", "Risk-tiered vendor management"],
+    challenges: ["Vendor adoption of the portal", "Data standardization across vendors"],
+    roi: 68
+  },
+  {
+    id: 16, name: "Quality Control", icon: "✅",
+    color: "#ffecd2", impact: "high", categories: ["operations","analytics"],
+    aiTech: ["Computer Vision QC", "Statistical Process Control AI", "Defect Prediction ML", "Root Cause Analysis AI"],
+    improvement: "AI-powered cameras inspect products at speed and scale no human team can match, detecting defects with sub-millimeter accuracy. Predictive models identify conditions that lead to quality failures before they occur.",
+    benefits: ["Defect detection accuracy exceeds 99%", "Inspection speed 10x faster than manual", "Quality issues caught before customer delivery", "Root causes identified automatically"],
+    challenges: ["High-quality training data for vision models needed", "Camera and hardware investment required"],
+    roi: 87
+  },
+  {
+    id: 17, name: "Fleet Management", icon: "🚗",
+    color: "#30cfd0", impact: "high", categories: ["operations","analytics"],
+    aiTech: ["Predictive Maintenance AI", "Telematics ML", "Route Optimization", "Driver Behavior Analysis"],
+    improvement: "AI analyzes telematics data to predict mechanical failures weeks before they occur. Driver behavior scoring promotes safe driving and reduces accident risk. Fleet utilization is continuously optimized to right-size the fleet.",
+    benefits: ["Vehicle downtime reduced by 35%", "Fuel consumption optimized", "Accident risk reduced through driver coaching", "Fleet size right-sized, saving capital"],
+    challenges: ["Telematics hardware costs", "Driver acceptance of monitoring"],
+    roi: 83
+  },
+  {
+    id: 18, name: "Customer Feedback & NPS", icon: "⭐",
+    color: "#fddb92", impact: "medium", categories: ["customer","analytics"],
+    aiTech: ["Sentiment Analysis NLP", "Topic Modeling", "Response Generation AI", "Predictive NPS"],
+    improvement: "AI processes thousands of reviews and feedback forms instantly, categorizing themes and surfacing the most impactful issues. Predictive NPS models identify which customers are at risk of giving negative scores before surveys are sent.",
+    benefits: ["100% of feedback analyzed, not just samples", "Issues surfaced in hours, not weeks", "Automated response drafts save team time", "Proactive NPS management"],
+    challenges: ["Multilingual feedback requires robust models", "Context nuance can be missed by AI"],
+    roi: 71
+  },
+  {
+    id: 19, name: "Compliance & Risk", icon: "🔒",
+    color: "#a18cd1", impact: "critical", categories: ["analytics","operations"],
+    aiTech: ["RegTech AI", "Anomaly Detection", "NLP Policy Monitoring", "Risk Scoring Models"],
+    improvement: "AI continuously monitors transactions, activities, and data for compliance breaches in real time. Policy changes are automatically scanned by NLP to flag areas needing internal updates. Risk scores are dynamically updated as business conditions change.",
+    benefits: ["Regulatory violations detected in real time", "Audit preparation time cut by 50%", "Policy compliance automated", "Enterprise risk visibility in one dashboard"],
+    challenges: ["Regulatory changes require AI model updates", "Explainability of AI risk decisions for auditors"],
+    roi: 89
+  }
+];
+
+const impactMap = { critical: "🔴 Critical", high: "🟢 High", medium: "🟡 Medium" };
+const impactClass = { critical: "impact-critical", high: "impact-high", medium: "impact-medium" };
+
+function renderModules(data) {
+  const grid = document.getElementById('moduleGrid');
+  grid.innerHTML = '';
+  data.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    card.dataset.impact = m.impact;
+    card.dataset.categories = m.categories.join(' ');
+    card.style.animationDelay = `${i * 0.04}s`;
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="module-icon" style="background:${m.color}22; border:1px solid ${m.color}33;">${m.icon}</div>
+        <div class="card-title-group">
+          <div class="module-num">Module ${String(m.id).padStart(2,'0')}</div>
+          <div class="module-name">${m.name}</div>
+        </div>
+        <span class="impact-badge ${impactClass[m.impact]}">${impactMap[m.impact]}</span>
+      </div>
+      <div class="card-body">
+        <div class="ai-tech-list">
+          ${m.aiTech.map(t => `<span class="ai-tag">${t}</span>`).join('')}
+        </div>
+        <div class="improvement-text">${m.improvement}</div>
+        <ul class="benefits-list">
+          ${m.benefits.map(b => `<li class="benefit-item">${b}</li>`).join('')}
+        </ul>
+        <button class="expand-btn" onclick="toggleExpand(event, this)">
+          <span>View Challenges & Risks</span>
+          <span class="arrow">↓</span>
+        </button>
+        <div class="expand-area">
+          <h4>Implementation Challenges</h4>
+          ${m.challenges.map(c => `<div class="challenge-item">${c}</div>`).join('')}
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="roi-label">Est. ROI</span>
+        <div class="roi-bar-wrap"><div class="roi-bar" style="width:${m.roi}%"></div></div>
+        <span class="roi-pct">${m.roi}%</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  // Animate ROI bars
+  setTimeout(() => {
+    document.querySelectorAll('.roi-bar').forEach(bar => {
+      bar.style.width = bar.style.width;
+    });
+  }, 100);
+}
+
+function toggleExpand(e, btn) {
+  e.stopPropagation();
+  const area = btn.nextElementSibling;
+  area.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.querySelector('span:first-child').textContent = area.classList.contains('open')
+    ? 'Hide Challenges' : 'View Challenges & Risks';
+}
+
+// Filter logic
+document.getElementById('filterRow').addEventListener('click', e => {
+  if (!e.target.classList.contains('filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  const filter = e.target.dataset.filter;
+  document.querySelectorAll('.module-card').forEach(card => {
+    if (filter === 'all') {
+      card.classList.remove('hidden');
+    } else if (['critical','high','medium'].includes(filter)) {
+      card.classList.toggle('hidden', card.dataset.impact !== filter);
+    } else {
+      card.classList.toggle('hidden', !card.dataset.categories.includes(filter));
+    }
+  });
+});
+
+renderModules(modules);
+</script>
+</body>
+</html>
