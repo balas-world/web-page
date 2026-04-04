@@ -1,8 +1,0 @@
-{
-    "dotnet.defaultSolution": "StudentManagementSystem.sln",
-    "files.exclude": {
-        "**/packages": true,
-        "**/bin": true,
-        "**/obj": true
-    }
-}
