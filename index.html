@@ -3,85 +3,878 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bala Prabhakar B - Hardware & DevOps Engineer</title>
+    <title>Bala Prabhakar B — Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Roboto',sans-serif;color:#333;background:url('images/devops-bg.jpg') center/cover fixed;background-color:#1a1a2e;}
-        .container{max-width:1200px;margin:0 auto;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 0 30px rgba(0,0,0,0.3);overflow:hidden;}
-        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;text-align:center;padding:2rem;}
-        h1{font-size:3rem;margin-bottom:0.5rem;}
-        .subtitle{font-size:1.5rem;opacity:0.9;}
-        .contact{display:flex;justify-content:center;gap:2rem;margin-top:1rem;font-size:1.1rem;flex-wrap:wrap;}
-        .section{padding:2rem;border-bottom:1px solid #eee;}
-        h2{color:#667eea;font-size:1.8rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
-        .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;}
-        .skill-item{background:#f8f9ff;padding:1rem;border-radius:8px;border-left:4px solid #667eea;}
-        ul{list-style:none;}ul li{padding:0.5rem 0;padding-left:1.5rem;position:relative;}ul li::before{content:'▶';color:#667eea;position:absolute;left:0;}
-        .languages{display:flex;gap:2rem;flex-wrap:wrap;}
-        @media(max-width:768px){.contact,.languages{flex-direction:column;gap:1rem;}h1{font-size:2rem;}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #05080A; color: #fff; overflow-x: hidden; }
+        ::selection { background: rgba(198,249,31,0.3); color: #c6f91f; }
+        .font-geist { font-family: 'Geist', sans-serif; }
+
+        /* DevOps Floating Icons Background */
+        .devops-bg {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+        }
+        .devops-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.04;
+            color: #c6f91f;
+            animation: floatIcon linear infinite;
+        }
+        @keyframes floatIcon {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        /* Grid background */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Glow pulse */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(198,249,31,0.1); }
+            50% { box-shadow: 0 0 40px rgba(198,249,31,0.25); }
+        }
+        .glow-card { animation: pulse-glow 4s ease-in-out infinite; }
+
+        /* Reveal animation */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+        .reveal { animation: reveal 0.8s cubic-bezier(0.2,0.8,0.2,1) both; }
+        .reveal-d1 { animation-delay: 0.1s; }
+        .reveal-d2 { animation-delay: 0.2s; }
+        .reveal-d3 { animation-delay: 0.3s; }
+        .reveal-d4 { animation-delay: 0.4s; }
+        .reveal-d5 { animation-delay: 0.5s; }
+        .reveal-d6 { animation-delay: 0.6s; }
+
+        /* Typing cursor */
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        .cursor { animation: blink 1s step-end infinite; }
+
+        /* Skill bar animation */
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+        .skill-bar { animation: fillBar 1.5s cubic-bezier(0.2,0.8,0.2,1) both; }
+
+        /* Scroll-triggered */
+        .scroll-reveal {
+            opacity: 0; transform: translateY(40px); filter: blur(6px);
+            transition: all 0.8s cubic-bezier(0.2,0.8,0.2,1);
+        }
+        .scroll-reveal.visible {
+            opacity: 1; transform: translateY(0); filter: blur(0);
+        }
+
+        /* Timeline */
+        .timeline-line {
+            background: linear-gradient(to bottom, rgba(198,249,31,0.5), rgba(198,249,31,0.05));
+        }
+
+        /* Tool icon hover */
+        .tool-card:hover .tool-icon {
+            transform: scale(1.15) rotate(-5deg);
+            filter: drop-shadow(0 0 12px rgba(198,249,31,0.5));
+        }
+        .tool-card:hover {
+            background: rgba(198,249,31,0.05);
+            border-color: rgba(198,249,31,0.3);
+        }
+
+        /* Nav link hover line */
+        .nav-link::after {
+            content: ''; display: block; width: 0; height: 1px;
+            background: #c6f91f; transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Print styles */
+        @media print {
+            .devops-bg, .no-print { display: none !important; }
+            body { background: #fff; color: #000; }
+            .print-white { background: #fff !important; color: #000 !important; border-color: #ccc !important; }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #05080A; }
+        ::-webkit-scrollbar-thumb { background: rgba(198,249,31,0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(198,249,31,0.5); }
+
+        .hw-img {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .hw-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .hw-img:hover img {
+            opacity: 0.85;
+            transform: scale(1.05);
+        }
+        .hw-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,8,10,0.8), transparent);
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Bala Prabhakar B</h1>
-            <p class="subtitle">Hardware & Network Engineer | DevOps Engineer</p>
-            <div class="contact">
-                <span>📧 <a href="mailto:balaprabhaka9@gmail.com" style="color:white;">balaprabhaka9@gmail.com</a></span>
-                <span>📱 8098400749</span>
-                <span>📅 29/07/1999</span>
-            </div>
-        </header>
+<body class="grid-bg">
 
-        <section class="section">
-            <h2>💼 Experience</h2>
-            <ul>
-                <li><strong>2024-Present:</strong> Hardware & Network Engineer, Vaps Knowledge Pvt Ltd, Bengaluru</li>
-                <li><strong>2022-2024:</strong> Network Engineer, MEGA Byte Computers, Bengaluru</li>
-            </ul>
-        </section>
+<!-- Floating DevOps Icons Background -->
+<div class="devops-bg no-print" id="devopsBg"></div>
 
-        <section class="section">
-            <h2>🛠️ Hardware & Network</h2>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <ul><li>Hardware installation & troubleshooting</li><li>Network configuration & troubleshooting</li><li>CCTV configuration & troubleshooting</li></ul>
-                </div>
-                <div class="skill-item">
-                    <ul><li>OS installation (all kinds)</li><li>Printer installation & troubleshooting</li><li>Windows Server: AD, DHCP, Shared Folders</li></ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>🚀 DevOps Tools</h2>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <ul><li>Jenkins</li><li>Docker</li><li>Ansible</li></ul>
-                </div>
-                <div class="skill-item">
-                    <ul><li>Prometheus</li><li>Grafana</li><li>GitHub Actions</li><li>Kubernetes</li></ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>📚 Education</h2>
-            <ul>
-                <li>B.Sc Mathematics (2017-2020), Loyola College, Chennai</li>
-                <li>Hardware & Network Course (2020-2021)</li>
-            </ul>
-        </section>
-
-        <section class="section">
-            <h2>🏆 Achievements & Hobbies</h2>
-            <div class="languages">
-                <div><strong>Languages:</strong> Tamil, Kannada, English</div>
-                <div><strong>Awards:</strong> Best NNC Cadet 2019-2020</div>
-                <div><strong>Hobby:</strong> Chess</div>
-            </div>
-        </section>
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-[#c6f91f] rounded-sm flex items-center justify-center text-black font-bold text-sm font-geist">BP</div>
+            <span class="font-geist font-medium text-sm tracking-wide">BALA PRABHAKAR</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#about" class="nav-link text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors">About</a>
+            <a href="#experience" class="nav-link text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors">Experience</a>
+            <a href="#skills" class="nav-link text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors">Skills</a>
+            <a href="#devops" class="nav-link text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors">DevOps</a>
+            <a href="#education" class="nav-link text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors">Education</a>
+            <button onclick="window.print()" class="ml-4 text-xs font-medium tracking-wide uppercase bg-white text-black px-5 py-2.5 hover:bg-[#c6f91f] transition-colors">Print CV</button>
+        </div>
+        <!-- Mobile menu button -->
+        <button id="mobileMenuBtn" class="md:hidden p-2 text-white/70 hover:text-white">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
     </div>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-black/95 border-t border-white/5 px-6 py-4 space-y-3">
+        <a href="#about" class="block text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white py-2">About</a>
+        <a href="#experience" class="block text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white py-2">Experience</a>
+        <a href="#skills" class="block text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white py-2">Skills</a>
+        <a href="#devops" class="block text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white py-2">DevOps</a>
+        <a href="#education" class="block text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white py-2">Education</a>
+        <button onclick="window.print()" class="w-full text-xs font-medium tracking-wide uppercase bg-white text-black px-5 py-2.5 hover:bg-[#c6f91f] transition-colors mt-2">Print CV</button>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="relative min-h-screen flex items-center pt-20" id="about">
+    <!-- Hero background image -->
+    <div class="absolute inset-0 z-0">
+        <img src="https://picsum.photos/seed/devops-server-rack/1920/1080.jpg" alt="Server Infrastructure" class="w-full h-full object-cover opacity-15" />
+        <div class="absolute inset-0 bg-gradient-to-r from-[#05080A] via-[#05080A]/90 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#05080A] via-transparent to-[#05080A]/60"></div>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 w-full">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Left: Text -->
+            <div>
+                <div class="reveal reveal-d1 flex items-center gap-2 mb-6">
+                    <span class="w-2 h-2 bg-[#c6f91f] rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#c6f91f]">Available for opportunities</span>
+                </div>
+
+                <h1 class="reveal reveal-d2 text-4xl sm:text-5xl lg:text-7xl font-light tracking-tighter leading-[1.1] mb-6">
+                    Bala<br>Prabhakar<span class="text-[#c6f91f]">.</span>
+                </h1>
+
+                <div class="reveal reveal-d3 flex flex-wrap gap-3 mb-8">
+                    <span class="text-xs font-medium tracking-widest uppercase px-4 py-2 border border-[#c6f91f]/30 text-[#c6f91f] bg-[#c6f91f]/5">DevOps Engineer</span>
+                    <span class="text-xs font-medium tracking-widest uppercase px-4 py-2 border border-white/10 text-white/70">Hardware & Network Engineer</span>
+                </div>
+
+                <p class="reveal reveal-d4 text-lg font-light text-white/70 leading-relaxed max-w-lg mb-10">
+                    Specialized in DevOps system automation & monitoring tools, with a strong foundation in hardware installation, network configuration, and Windows Server administration.
+                    <span class="cursor text-[#c6f91f]">|</span>
+                </p>
+
+                <div class="reveal reveal-d5 flex flex-wrap gap-6 text-sm text-white/50">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4 text-[#c6f91f]"></i>
+                        <span>balaprabhaka9@gmail.com</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4 text-[#c6f91f]"></i>
+                        <span>+91 8098400749</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-4 h-4 text-[#c6f91f]"></i>
+                        <span>29/07/1999</span>
+                    </div>
+                </div>
+
+                <div class="reveal reveal-d6 flex items-center gap-4 mt-8">
+                    <a href="#experience" class="inline-flex items-center gap-2 bg-white text-black text-xs font-medium tracking-wide uppercase px-7 py-3.5 hover:bg-[#c6f91f] transition-colors group">
+                        View Experience
+                        <i data-lucide="arrow-down" class="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform"></i>
+                    </a>
+                    <a href="#devops" class="inline-flex items-center gap-2 border border-white/20 text-white text-xs font-medium tracking-wide uppercase px-7 py-3.5 hover:bg-white/5 hover:border-white/30 transition-all">
+                        DevOps Tools
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Profile visual -->
+            <div class="reveal reveal-d4 hidden lg:block">
+                <div class="relative">
+                    <!-- Decorative frame -->
+                    <div class="absolute -top-4 -left-4 w-72 h-72 border border-[#c6f91f]/20 rounded-sm"></div>
+                    <div class="absolute -bottom-4 -right-4 w-72 h-72 border border-[#c6f91f]/10 rounded-sm"></div>
+                    <!-- Main image -->
+                    <div class="relative w-72 h-72 mx-auto glow-card overflow-hidden">
+                        <img src="https://picsum.photos/seed/devops-ops-center/600/600.jpg" alt="DevOps Operations" class="w-full h-full object-cover opacity-70" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#05080A] via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-[#c6f91f] rounded-full animate-pulse"></span>
+                                <span class="text-[10px] tracking-widest uppercase text-white/60">Systems Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 animate-bounce">
+        <span class="text-[10px] tracking-widest uppercase">Scroll</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+    </div>
+</section>
+
+<!-- SEPARATOR -->
+<div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+<!-- EXPERIENCE SECTION -->
+<section class="py-24 relative" id="experience">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+        <!-- Section header -->
+        <div class="scroll-reveal mb-20">
+            <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#c6f91f] mb-4 block">Career Path</span>
+            <h2 class="text-4xl sm:text-5xl font-light tracking-tighter leading-[1.1]">Work Experience<span class="text-[#c6f91f]">.</span></h2>
+        </div>
+
+        <!-- Timeline -->
+        <div class="relative">
+            <!-- Timeline line -->
+            <div class="absolute left-6 sm:left-8 top-0 bottom-0 w-px timeline-line"></div>
+
+            <!-- Experience 1 -->
+            <div class="scroll-reveal relative pl-16 sm:pl-20 pb-16">
+                <div class="absolute left-4 sm:left-6 top-1 w-4 h-4 border-2 border-[#c6f91f] bg-[#05080A] rounded-full z-10"></div>
+                <div class="absolute left-[19px] sm:left-[27px] top-[7px] w-2 h-2 bg-[#c6f91f] rounded-full"></div>
+
+                <div class="bg-white/[0.02] border border-white/5 rounded-sm p-6 sm:p-8 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div>
+                            <h3 class="text-xl font-medium mb-1">Hardware & Network Engineer</h3>
+                            <p class="text-[#c6f91f] text-sm font-medium">VAPS Knowledge Pvt Ltd</p>
+                        </div>
+                        <span class="text-xs font-medium tracking-widest uppercase px-3 py-1.5 bg-[#c6f91f]/10 text-[#c6f91f] border border-[#c6f91f]/20">2024 — Present</span>
+                    </div>
+                    <p class="text-white/50 text-sm mb-4">Basaweshwara Nagar, Bengaluru 560079</p>
+                    <!-- Image -->
+                    <div class="hw-img h-48 sm:h-56 mb-5">
+                        <img src="https://picsum.photos/seed/network-cable-switch/800/400.jpg" alt="Network Infrastructure" />
+                        <div class="absolute bottom-3 left-3 z-10">
+                            <span class="text-[10px] font-semibold tracking-widest uppercase text-[#c6f91f] bg-black/60 px-3 py-1 backdrop-blur-sm">Network & Hardware Ops</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-white/70">
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#c6f91f] mt-0.5 shrink-0"></i>Hardware installation and troubleshooting</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#c6f91f] mt-0.5 shrink-0"></i>Network configuration and troubleshooting</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#c6f91f] mt-0.5 shrink-0"></i>CCTV configuration and troubleshooting</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-[#c6f91f] mt-0.5 shrink-0"></i>Windows Server configuration — AD, Groups & Policies, Shared Folder, DHCP</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Experience 2 -->
+            <div class="scroll-reveal relative pl-16 sm:pl-20 pb-16">
+                <div class="absolute left-4 sm:left-6 top-1 w-4 h-4 border-2 border-white/30 bg-[#05080A] rounded-full z-10"></div>
+
+                <div class="bg-white/[0.02] border border-white/5 rounded-sm p-6 sm:p-8 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div>
+                            <h3 class="text-xl font-medium mb-1">Network Engineer</h3>
+                            <p class="text-white/50 text-sm font-medium">MEGA Byte Computers</p>
+                        </div>
+                        <span class="text-xs font-medium tracking-widest uppercase px-3 py-1.5 bg-white/5 text-white/50 border border-white/10">2022 — 2024</span>
+                    </div>
+                    <p class="text-white/50 text-sm mb-4">Old Airport Road, Vimanapura, HAL, Bengaluru 560017</p>
+                    <!-- Image -->
+                    <div class="hw-img h-48 sm:h-56 mb-5">
+                        <img src="https://picsum.photos/seed/server-room-tech/800/400.jpg" alt="Server Room" />
+                        <div class="absolute bottom-3 left-3 z-10">
+                            <span class="text-[10px] font-semibold tracking-widest uppercase text-white/70 bg-black/60 px-3 py-1 backdrop-blur-sm">Network Engineering</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-white/70">
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-white/30 mt-0.5 shrink-0"></i>Network configuration and troubleshooting</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-white/30 mt-0.5 shrink-0"></i>All kinds of OS installation and configuration</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-white/30 mt-0.5 shrink-0"></i>Printer installation and troubleshooting</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-white/30 mt-0.5 shrink-0"></i>Hardware installation and troubleshooting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEPARATOR -->
+<div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+<!-- SKILLS SECTION - Hardware & Network -->
+<section class="py-24 relative" id="skills">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+        <div class="scroll-reveal mb-20">
+            <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#c6f91f] mb-4 block">Technical Proficiency</span>
+            <h2 class="text-4xl sm:text-5xl font-light tracking-tighter leading-[1.1]">Hardware & Network<span class="text-[#c6f91f]">.</span></h2>
+        </div>
+
+        <!-- Skills Image Banner -->
+        <div class="scroll-reveal grid grid-cols-3 gap-3 mb-16">
+            <div class="hw-img h-32 sm:h-44">
+                <img src="https://picsum.photos/seed/hardware-motherboard/400/300.jpg" alt="Hardware" />
+                <div class="absolute bottom-2 left-2 z-10">
+                    <span class="text-[9px] font-semibold tracking-widest uppercase text-white/80 bg-black/50 px-2 py-0.5 backdrop-blur-sm">Hardware</span>
+                </div>
+            </div>
+            <div class="hw-img h-32 sm:h-44">
+                <img src="https://picsum.photos/seed/ethernet-cable-network/400/300.jpg" alt="Networking" />
+                <div class="absolute bottom-2 left-2 z-10">
+                    <span class="text-[9px] font-semibold tracking-widest uppercase text-white/80 bg-black/50 px-2 py-0.5 backdrop-blur-sm">Networking</span>
+                </div>
+            </div>
+            <div class="hw-img h-32 sm:h-44">
+                <img src="https://picsum.photos/seed/cctv-surveillance-cam/400/300.jpg" alt="CCTV" />
+                <div class="absolute bottom-2 left-2 z-10">
+                    <span class="text-[9px] font-semibold tracking-widest uppercase text-white/80 bg-black/50 px-2 py-0.5 backdrop-blur-sm">CCTV</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skill Bars -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="scroll-reveal space-y-6">
+                <!-- Hardware Installation -->
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-white/90">Hardware Installation & Troubleshooting</span>
+                        <span class="text-xs text-[#c6f91f] font-medium">95%</span>
+                    </div>
+                    <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+                        <div class="skill-bar h-full bg-gradient-to-r from-[#c6f91f] to-[#c6f91f]/60 rounded-full" style="width:95%"></div>
+                    </div>
+                </div>
+                <!-- Network Configuration -->
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-white/90">Network Configuration & Troubleshooting</span>
+                        <span class="text-xs text-[#c6f91f] font-medium">90%</span>
+                    </div>
+                    <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+                        <div class="skill-bar h-full bg-gradient-to-r from-[#c6f91f] to-[#c6f91f]/60 rounded-full" style="width:90%"></div>
+                    </div>
+                </div>
+                <!-- CCTV -->
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-white/90">CCTV Configuration & Troubleshooting</span>
+                        <span class="text-xs text-[#c6f91f] font-medium">88%</span>
+                    </div>
+                    <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+                        <div class="skill-bar h-full bg-gradient-to-r from-[#c6f91f] to-[#c6f91f]/60 rounded-full" style="width:88%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-reveal space-y-6">
+                <!-- OS Installation -->
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-white/90">OS Installation & Configuration</span>
+                        <span class="text-xs text-[#c6f91f] font-medium">92%</span>
+                    </div>
+                    <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+                        <div class="skill-bar h-full bg-gradient-to-r from-[#c6f91f] to-[#c6f91f]/60 rounded-full" style="width:92%"></div>
+                    </div>
+                </div>
+                <!-- Printer -->
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-white/90">Printer Installation & Troubleshooting</span>
+                        <span class="text-xs text-[#c6f91f] font-medium">87%</span>
+                    </div>
+                    <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+                        <div class="skill-bar h-full bg-gradient-to-r from-[#c6f91f] to-[#c6f91f]/60 rounded-full" style="width:87%"></div>
+                    </div>
+                </div>
+                <!-- Windows Server -->
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-white/90">Windows Server (AD, DHCP, Policies)</span>
+                        <span class="text-xs text-[#c6f91f] font-medium">85%</span>
+                    </div>
+                    <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+                        <div class="skill-bar h-full bg-gradient-to-r from-[#c6f91f] to-[#c6f91f]/60 rounded-full" style="width:85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEPARATOR -->
+<div class="h-px bg-gradient-to-r from-transparent via-[#c6f91f]/20 to-transparent"></div>
+
+<!-- DEVOPS SECTION -->
+<section class="py-24 relative" id="devops">
+    <!-- Background glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#c6f91f]/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
+        <div class="scroll-reveal mb-20 text-center">
+            <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#c6f91f] mb-4 block">Automation & Monitoring</span>
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tighter leading-[1.1]">DevOps Toolstack<span class="text-[#c6f91f]">.</span></h2>
+            <p class="text-lg font-light text-white/50 mt-6 max-w-2xl mx-auto">Specialized in DevOps system automation and monitoring tools — building CI/CD pipelines, containerizing applications, and orchestrating infrastructure.</p>
+        </div>
+
+        <!-- DevOps Image -->
+        <div class="scroll-reveal hw-img h-56 sm:h-72 mb-16">
+            <img src="https://picsum.photos/seed/devops-pipeline-ci-cd/1200/500.jpg" alt="DevOps Pipeline" />
+            <div class="absolute bottom-4 left-4 z-10 flex items-center gap-2">
+                <span class="w-2 h-2 bg-[#c6f91f] rounded-full animate-pulse"></span>
+                <span class="text-xs font-semibold tracking-widest uppercase text-white/80 bg-black/50 px-3 py-1 backdrop-blur-sm">CI/CD Pipeline Automation</span>
+            </div>
+        </div>
+
+        <!-- Tool Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Jenkins -->
+            <div class="tool-card scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 text-center transition-all duration-300 cursor-default">
+                <div class="tool-icon w-16 h-16 mx-auto mb-4 flex items-center justify-center transition-all duration-300">
+                    <svg viewBox="0 0 80 80" class="w-14 h-14">
+                        <rect x="10" y="20" width="60" height="45" rx="4" fill="none" stroke="#c6f91f" stroke-width="2" opacity="0.6"/>
+                        <circle cx="30" cy="42" r="8" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <circle cx="50" cy="42" r="8" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="38" y1="42" x2="42" y2="42" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="20" y1="30" x2="60" y2="30" stroke="#c6f91f" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    </svg>
+                </div>
+                <h4 class="text-sm font-medium mb-1">Jenkins</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">CI/CD</p>
+            </div>
+
+            <!-- Docker -->
+            <div class="tool-card scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 text-center transition-all duration-300 cursor-default">
+                <div class="tool-icon w-16 h-16 mx-auto mb-4 flex items-center justify-center transition-all duration-300">
+                    <svg viewBox="0 0 80 80" class="w-14 h-14">
+                        <rect x="15" y="40" width="12" height="10" fill="none" stroke="#c6f91f" stroke-width="2" rx="1"/>
+                        <rect x="29" y="40" width="12" height="10" fill="none" stroke="#c6f91f" stroke-width="2" rx="1"/>
+                        <rect x="43" y="40" width="12" height="10" fill="none" stroke="#c6f91f" stroke-width="2" rx="1"/>
+                        <rect x="29" y="28" width="12" height="10" fill="none" stroke="#c6f91f" stroke-width="2" rx="1"/>
+                        <rect x="43" y="28" width="12" height="10" fill="none" stroke="#c6f91f" stroke-width="2" rx="1"/>
+                        <path d="M10 52 Q40 65 70 52" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h4 class="text-sm font-medium mb-1">Docker</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">Containers</p>
+            </div>
+
+            <!-- Ansible -->
+            <div class="tool-card scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 text-center transition-all duration-300 cursor-default">
+                <div class="tool-icon w-16 h-16 mx-auto mb-4 flex items-center justify-center transition-all duration-300">
+                    <svg viewBox="0 0 80 80" class="w-14 h-14">
+                        <circle cx="40" cy="40" r="22" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <circle cx="40" cy="40" r="5" fill="#c6f91f" opacity="0.6"/>
+                        <line x1="40" y1="18" x2="40" y2="28" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="40" y1="52" x2="40" y2="62" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="18" y1="40" x2="28" y2="40" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="52" y1="40" x2="62" y2="40" stroke="#c6f91f" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h4 class="text-sm font-medium mb-1">Ansible</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">Config Mgmt</p>
+            </div>
+
+            <!-- Prometheus -->
+            <div class="tool-card scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 text-center transition-all duration-300 cursor-default">
+                <div class="tool-icon w-16 h-16 mx-auto mb-4 flex items-center justify-center transition-all duration-300">
+                    <svg viewBox="0 0 80 80" class="w-14 h-14">
+                        <circle cx="30" cy="35" r="10" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <circle cx="50" cy="35" r="10" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="22" y1="55" x2="58" y2="55" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="22" y1="55" x2="22" y2="60" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="35" y1="55" x2="35" y2="62" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="48" y1="55" x2="48" y2="58" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="58" y1="55" x2="58" y2="64" stroke="#c6f91f" stroke-width="2"/>
+                        <path d="M15 60 Q40 72 65 60" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h4 class="text-sm font-medium mb-1">Prometheus</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">Monitoring</p>
+            </div>
+
+            <!-- Grafana -->
+            <div class="tool-card scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 text-center transition-all duration-300 cursor-default">
+                <div class="tool-icon w-16 h-16 mx-auto mb-4 flex items-center justify-center transition-all duration-300">
+                    <svg viewBox="0 0 80 80" class="w-14 h-14">
+                        <rect x="15" y="20" width="50" height="40" rx="3" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <polyline points="20,52 30,38 40,45 50,30 60,35" fill="none" stroke="#c6f91f" stroke-width="2.5"/>
+                        <circle cx="30" cy="38" r="2" fill="#c6f91f"/>
+                        <circle cx="40" cy="45" r="2" fill="#c6f91f"/>
+                        <circle cx="50" cy="30" r="2" fill="#c6f91f"/>
+                        <circle cx="60" cy="35" r="2" fill="#c6f91f"/>
+                    </svg>
+                </div>
+                <h4 class="text-sm font-medium mb-1">Grafana</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">Visualization</p>
+            </div>
+
+            <!-- GitHub Actions -->
+            <div class="tool-card scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 text-center transition-all duration-300 cursor-default">
+                <div class="tool-icon w-16 h-16 mx-auto mb-4 flex items-center justify-center transition-all duration-300">
+                    <svg viewBox="0 0 80 80" class="w-14 h-14">
+                        <circle cx="28" cy="30" r="8" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <circle cx="52" cy="30" r="8" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <circle cx="40" cy="55" r="8" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="34" y1="35" x2="38" y2="49" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="46" y1="35" x2="42" y2="49" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="36" y1="30" x2="44" y2="30" stroke="#c6f91f" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h4 class="text-sm font-medium mb-1">GitHub Actions</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">CI/CD</p>
+            </div>
+
+            <!-- Kubernetes -->
+            <div class="tool-card scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 text-center transition-all duration-300 cursor-default">
+                <div class="tool-icon w-16 h-16 mx-auto mb-4 flex items-center justify-center transition-all duration-300">
+                    <svg viewBox="0 0 80 80" class="w-14 h-14">
+                        <circle cx="40" cy="40" r="20" fill="none" stroke="#c6f91f" stroke-width="2"/>
+                        <circle cx="40" cy="40" r="5" fill="#c6f91f" opacity="0.5"/>
+                        <line x1="40" y1="20" x2="40" y2="35" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="40" y1="45" x2="40" y2="60" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="20" y1="40" x2="35" y2="40" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="45" y1="40" x2="60" y2="40" stroke="#c6f91f" stroke-width="2"/>
+                        <line x1="26" y1="26" x2="36" y2="36" stroke="#c6f91f" stroke-width="1.5"/>
+                        <line x1="44" y1="44" x2="54" y2="54" stroke="#c6f91f" stroke-width="1.5"/>
+                        <line x1="54" y1="26" x2="44" y2="36" stroke="#c6f91f" stroke-width="1.5"/>
+                        <line x1="36" y1="44" x2="26" y2="54" stroke="#c6f91f" stroke-width="1.5"/>
+                        <circle cx="40" cy="20" r="3" fill="#c6f91f" opacity="0.4"/>
+                        <circle cx="40" cy="60" r="3" fill="#c6f91f" opacity="0.4"/>
+                        <circle cx="20" cy="40" r="3" fill="#c6f91f" opacity="0.4"/>
+                        <circle cx="60" cy="40" r="3" fill="#c6f91f" opacity="0.4"/>
+                    </svg>
+                </div>
+                <h4 class="text-sm font-medium mb-1">Kubernetes</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">Orchestration</p>
+            </div>
+
+            <!-- Automation Label -->
+            <div class="scroll-reveal border border-[#c6f91f]/20 bg-[#c6f91f]/5 rounded-sm p-6 flex flex-col items-center justify-center text-center">
+                <i data-lucide="repeat" class="w-8 h-8 text-[#c6f91f] mb-3"></i>
+                <h4 class="text-sm font-medium mb-1 text-[#c6f91f]">Repeated Task</h4>
+                <p class="text-[10px] text-white/40 tracking-wider uppercase">Automation</p>
+            </div>
+        </div>
+
+        <!-- DevOps Pipeline Visual -->
+        <div class="scroll-reveal mt-16 border border-white/5 bg-white/[0.02] rounded-sm p-6 sm:p-8">
+            <h3 class="text-sm font-semibold tracking-widest uppercase text-[#c6f91f] mb-6">Automation Pipeline Flow</h3>
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-0">
+                <div class="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-sm">
+                    <i data-lucide="git-branch" class="w-4 h-4 text-[#c6f91f]"></i>
+                    <span class="text-xs font-medium">GitHub</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-white/20 hidden sm:block"></i>
+                <div class="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-sm">
+                    <i data-lucide="play-circle" class="w-4 h-4 text-[#c6f91f]"></i>
+                    <span class="text-xs font-medium">GitHub Actions</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-white/20 hidden sm:block"></i>
+                <div class="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-sm">
+                    <i data-lucide="box" class="w-4 h-4 text-[#c6f91f]"></i>
+                    <span class="text-xs font-medium">Docker</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-white/20 hidden sm:block"></i>
+                <div class="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-sm">
+                    <i data-lucide="ship" class="w-4 h-4 text-[#c6f91f]"></i>
+                    <span class="text-xs font-medium">Kubernetes</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-white/20 hidden sm:block"></i>
+                <div class="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-sm">
+                    <i data-lucide="activity" class="w-4 h-4 text-[#c6f91f]"></i>
+                    <span class="text-xs font-medium">Prometheus</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-white/20 hidden sm:block"></i>
+                <div class="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-sm">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#c6f91f]"></i>
+                    <span class="text-xs font-medium">Grafana</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEPARATOR -->
+<div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+<!-- EDUCATION SECTION -->
+<section class="py-24 relative" id="education">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+        <div class="scroll-reveal mb-20">
+            <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#c6f91f] mb-4 block">Academic Background</span>
+            <h2 class="text-4xl sm:text-5xl font-light tracking-tighter leading-[1.1]">Education<span class="text-[#c6f91f]">.</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- B.Sc -->
+            <div class="scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 sm:p-8 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300">
+                <div class="w-12 h-12 border border-[#c6f91f]/20 bg-[#c6f91f]/5 rounded-sm flex items-center justify-center mb-5">
+                    <i data-lucide="graduation-cap" class="w-6 h-6 text-[#c6f91f]"></i>
+                </div>
+                <span class="text-[10px] font-semibold tracking-widest uppercase text-[#c6f91f] mb-2 block">2017 — 2020</span>
+                <h3 class="text-lg font-medium mb-2">B.Sc Mathematics</h3>
+                <p class="text-sm text-white/50 mb-4">Loyola College, Chennai</p>
+                <div class="h-px bg-white/5 my-4"></div>
+                <p class="text-xs text-white/40">Graduated with a strong foundation in analytical and problem-solving skills</p>
+            </div>
+
+            <!-- Hardware & Network Course -->
+            <div class="scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 sm:p-8 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300">
+                <div class="w-12 h-12 border border-[#c6f91f]/20 bg-[#c6f91f]/5 rounded-sm flex items-center justify-center mb-5">
+                    <i data-lucide="cpu" class="w-6 h-6 text-[#c6f91f]"></i>
+                </div>
+                <span class="text-[10px] font-semibold tracking-widest uppercase text-[#c6f91f] mb-2 block">2020 — 2021</span>
+                <h3 class="text-lg font-medium mb-2">Hardware & Network Course</h3>
+                <p class="text-sm text-white/50 mb-4">Professional Certification</p>
+                <div class="h-px bg-white/5 my-4"></div>
+                <p class="text-xs text-white/40">Specialized training in hardware, networking, and server administration</p>
+            </div>
+
+            <!-- Schooling -->
+            <div class="scroll-reveal group border border-white/5 bg-white/[0.02] rounded-sm p-6 sm:p-8 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300">
+                <div class="w-12 h-12 border border-[#c6f91f]/20 bg-[#c6f91f]/5 rounded-sm flex items-center justify-center mb-5">
+                    <i data-lucide="school" class="w-6 h-6 text-[#c6f91f]"></i>
+                </div>
+                <span class="text-[10px] font-semibold tracking-widest uppercase text-[#c6f91f] mb-2 block">Completed 2017</span>
+                <h3 class="text-lg font-medium mb-2">Schooling</h3>
+                <p class="text-sm text-white/50 mb-4">Secondary Education</p>
+                <div class="h-px bg-white/5 my-4"></div>
+                <p class="text-xs text-white/40">Completed schooling with a focus on science and mathematics</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEPARATOR -->
+<div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+<!-- EXTRACURRICULAR & PERSONAL SECTION -->
+<section class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Extracurricular -->
+            <div class="scroll-reveal">
+                <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#c6f91f] mb-6 block">Beyond Work</span>
+                <h2 class="text-3xl sm:text-4xl font-light tracking-tighter leading-[1.1] mb-10">Extracurricular<span class="text-[#c6f91f]">.</span></h2>
+
+                <div class="space-y-4">
+                    <div class="group border border-white/5 bg-white/[0.02] rounded-sm p-5 hover:bg-white/[0.04] hover:border-[#c6f91f]/20 transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 border border-[#c6f91f]/20 bg-[#c6f91f]/5 rounded-sm flex items-center justify-center shrink-0">
+                                <i data-lucide="award" class="w-5 h-5 text-[#c6f91f]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium mb-1">NNC 'C' Certificate</h4>
+                                <p class="text-xs text-white/40">National Cadet Corps — C Certificate holder</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group border border-white/5 bg-white/[0.02] rounded-sm p-5 hover:bg-white/[0.04] hover:border-[#c6f91f]/20 transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 border border-[#c6f91f]/20 bg-[#c6f91f]/5 rounded-sm flex items-center justify-center shrink-0">
+                                <i data-lucide="trophy" class="w-5 h-5 text-[#c6f91f]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium mb-1">Best NNC Cadet</h4>
+                                <p class="text-xs text-white/40">Awarded Best NNC Cadet — 2019-2020, Loyola College Chennai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Details -->
+            <div class="scroll-reveal">
+                <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#c6f91f] mb-6 block">Personal Info</span>
+                <h2 class="text-3xl sm:text-4xl font-light tracking-tighter leading-[1.1] mb-10">About Me<span class="text-[#c6f91f]">.</span></h2>
+
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5">
+                        <i data-lucide="user" class="w-4 h-4 text-[#c6f91f] shrink-0"></i>
+                        <div>
+                            <span class="text-[10px] tracking-widest uppercase text-white/30 block">Name</span>
+                            <span class="text-sm font-medium">Bala Prabhakar B</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5">
+                        <i data-lucide="calendar-days" class="w-4 h-4 text-[#c6f91f] shrink-0"></i>
+                        <div>
+                            <span class="text-[10px] tracking-widest uppercase text-white/30 block">Date of Birth</span>
+                            <span class="text-sm font-medium">29/07/1999</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5">
+                        <i data-lucide="mail" class="w-4 h-4 text-[#c6f91f] shrink-0"></i>
+                        <div>
+                            <span class="text-[10px] tracking-widest uppercase text-white/30 block">Email</span>
+                            <span class="text-sm font-medium">balaprabhaka9@gmail.com</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5">
+                        <i data-lucide="phone" class="w-4 h-4 text-[#c6f91f] shrink-0"></i>
+                        <div>
+                            <span class="text-[10px] tracking-widest uppercase text-white/30 block">Phone</span>
+                            <span class="text-sm font-medium">+91 8098400749</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5">
+                        <i data-lucide="languages" class="w-4 h-4 text-[#c6f91f] shrink-0"></i>
+                        <div>
+                            <span class="text-[10px] tracking-widest uppercase text-white/30 block">Languages</span>
+                            <div class="flex gap-2 mt-1">
+                                <span class="text-xs px-3 py-1 bg-white/5 border border-white/10 rounded-sm">Tamil</span>
+                                <span class="text-xs px-3 py-1 bg-white/5 border border-white/10 rounded-sm">Kannada</span>
+                                <span class="text-xs px-3 py-1 bg-white/5 border border-white/10 rounded-sm">English</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 py-3">
+                        <i data-lucide="chess" class="w-4 h-4 text-[#c6f91f] shrink-0"></i>
+                        <div>
+                            <span class="text-[10px] tracking-widest uppercase text-white/30 block">Hobby</span>
+                            <span class="text-sm font-medium">Playing Chess ♟️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-12">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-6 bg-[#c6f91f] rounded-sm flex items-center justify-center text-black font-bold text-[10px] font-geist">BP</div>
+                <span class="text-xs text-white/40">© 2025 Bala Prabhakar B. All rights reserved.</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="mailto:balaprabhaka9@gmail.com" class="text-white/40 hover:text-[#c6f91f] transition-colors">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                </a>
+                <a href="tel:+918098400749" class="text-white/40 hover:text-[#c6f91f] transition-colors">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+                <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="text-white/40 hover:text-[#c6f91f] transition-colors">
+                    <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Floating DevOps icons background
+    const devopsTools = [
+        '⚙️', '🐳', '⎈', '📊', '🔥', '📦', '🔄', '🛠️', '🔌', '🌐',
+        '💻', '🖥️', '📡', '🔒', '☁️', '⚙', ' pipelines', 'YAML', 'CI/CD',
+        'Jenkins', 'Docker', 'K8s', 'Ansible', 'Git', 'Prometheus', 'Grafana',
+        'λ', '∫', '∞', '⟨⟩', '→', '⌘', '∇', '▶', '■', '●'
+    ];
+
+    const bg = document.getElementById('devopsBg');
+    for (let i = 0; i < 40; i++) {
+        const el = document.createElement('div');
+        el.className = 'devops-icon';
+        el.textContent = devopsTools[Math.floor(Math.random() * devopsTools.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
+        el.style.opacity = 0.02 + Math.random() * 0.04;
+        el.style.animationDuration = (15 + Math.random() * 30) + 's';
+        el.style.animationDelay = -(Math.random() * 40) + 's';
+        bg.appendChild(el);
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Navbar background on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.style.borderBottomColor = 'rgba(255,255,255,0.1)';
+        } else {
+            nav.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+        }
+    });
+</script>
+
 </body>
 </html>
