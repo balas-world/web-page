@@ -568,14 +568,616 @@
     color: #7ec8ff;
   }
 
-  /* ── ANIMATIONS ── */
-  .page > * { animation: fadeUp 0.5s ease both; }
-  .hero { animation-delay: 0.05s; }
-  .two-col { animation-delay: 0.15s; }
+  /* ── ANIMATED PROFILE HERO ── */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    overflow: visible;
+    background: none;
+    border: none;
+    margin-bottom: 28px;
+  }
+
+  /* Top banner */
+  .hero-banner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 36px;
+    align-items: center;
+    padding: 44px 48px 36px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--cyan);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,229,255,0.05) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* Animated avatar */
+  .avatar-system {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+  }
+
+  .avatar-core {
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #0a2040, #061830);
+    border: 2px solid rgba(0,229,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--cyan);
+    z-index: 3;
+    letter-spacing: 1px;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(0,229,255,0.3);
+  }
+
+  .orbit-ring-1 {
+    inset: 8px;
+    animation: orbit1 6s linear infinite;
+  }
+
+  .orbit-ring-2 {
+    inset: 0;
+    border-color: rgba(0,255,136,0.2);
+    animation: orbit2 10s linear infinite reverse;
+  }
+
+  @keyframes orbit1 { to { transform: rotate(360deg); } }
+  @keyframes orbit2 { to { transform: rotate(360deg); } }
+
+  .orbit-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform-origin: 0 0;
+  }
+
+  .orbit-dot-1 {
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+    transform: rotate(0deg) translateX(60px) translateY(-4px);
+    animation: dotOrbit1 6s linear infinite;
+  }
+
+  .orbit-dot-2 {
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    width: 6px; height: 6px;
+    transform: rotate(0deg) translateX(70px) translateY(-3px);
+    animation: dotOrbit2 10s linear infinite reverse;
+  }
+
+  .orbit-dot-3 {
+    background: #7c83fd;
+    box-shadow: 0 0 6px #7c83fd;
+    width: 5px; height: 5px;
+    transform: rotate(180deg) translateX(60px) translateY(-2.5px);
+    animation: dotOrbit1 6s linear infinite;
+  }
+
+  @keyframes dotOrbit1 {
+    to { transform: rotate(360deg) translateX(60px) translateY(-4px); }
+  }
+  @keyframes dotOrbit2 {
+    to { transform: rotate(-360deg) translateX(70px) translateY(-3px); }
+  }
+
+  /* Typewriter name */
+  .hero-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    line-height: 1.1;
+    text-transform: uppercase;
+    min-height: 56px;
+  }
+
+  .hero-name .typed-cursor {
+    display: inline-block;
+    width: 3px;
+    background: var(--cyan);
+    animation: blink 0.75s step-end infinite;
+    margin-left: 2px;
+    vertical-align: middle;
+    height: 0.85em;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-name .cyan { color: var(--cyan); }
+
+  /* Status pills */
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    border-radius: 2px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 1px;
+  }
+
+  .status-pill.active {
+    background: rgba(0,255,136,0.1);
+    border: 1px solid rgba(0,255,136,0.35);
+    color: var(--green);
+  }
+
+  .status-pill.role {
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--cyan);
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  /* Stats bar */
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 160px;
+  }
+
+  .stat-box {
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 3px;
+    padding: 10px 14px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 22px;
+    color: var(--cyan);
+    display: block;
+    font-weight: bold;
+  }
+
+  .stat-num.green { color: var(--green); }
+  .stat-num.orange { color: var(--orange); }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    font-family: 'Share Tech Mono', monospace;
+    text-transform: uppercase;
+  }
+
+  /* Meta row */
+  .hero-meta-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    background: rgba(0,229,255,0.04);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+  }
+
+  .meta-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-size: 12.5px;
+    color: var(--muted);
+    border-right: 1px solid rgba(0,229,255,0.12);
+    transition: background 0.2s;
+  }
+
+  .meta-chip:last-child { border-right: none; }
+  .meta-chip:hover { background: rgba(0,229,255,0.06); color: var(--cyan); }
+  .meta-chip a { color: inherit; text-decoration: none; }
+  .meta-chip a:hover { color: var(--green); }
+
+  /* ── ANIMATED EXPERIENCE TIMELINE ── */
+  .exp-timeline {
+    position: relative;
+    padding-left: 0;
+  }
+
+  .timeline-axis {
+    position: absolute;
+    left: 24px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--cyan), var(--green), rgba(0,229,255,0.1));
+    border-radius: 1px;
+  }
+
+  .timeline-axis::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: -1px;
+    width: 4px;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(0,229,255,0.4), transparent);
+    animation: axisPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes axisPulse {
+    0%,100%{ opacity:0.4; } 50%{ opacity:1; }
+  }
+
+  .tl-item {
+    display: flex;
+    gap: 28px;
+    padding-left: 56px;
+    padding-bottom: 32px;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .tl-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .tl-node {
+    position: absolute;
+    left: 14px;
+    top: 6px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .tl-node.current {
+    background: rgba(0,229,255,0.15);
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 14px rgba(0,229,255,0.5);
+    animation: nodePulse 2s ease-in-out infinite;
+  }
+
+  .tl-node.past {
+    background: rgba(0,255,136,0.1);
+    border: 2px solid var(--green);
+  }
+
+  @keyframes nodePulse {
+    0%,100%{ box-shadow: 0 0 8px rgba(0,229,255,0.4); }
+    50%{ box-shadow: 0 0 20px rgba(0,229,255,0.8), 0 0 40px rgba(0,229,255,0.3); }
+  }
+
+  .tl-node-inner {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+  }
+
+  .tl-node.past .tl-node-inner { background: var(--green); }
+
+  .tl-body {
+    flex: 1;
+    background: rgba(0,15,38,0.6);
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 4px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .tl-body:hover {
+    border-color: rgba(0,229,255,0.4);
+    box-shadow: 0 4px 24px rgba(0,229,255,0.08);
+  }
+
+  .tl-body::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .tl-item.current .tl-body::before { background: var(--cyan); }
+  .tl-item.past .tl-body::before { background: var(--green); }
+
+  .tl-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .tl-role {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #eaf4ff;
+    letter-spacing: 0.5px;
+  }
+
+  .tl-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .tl-badge.active {
+    background: rgba(0,255,136,0.12);
+    border: 1px solid rgba(0,255,136,0.4);
+    color: var(--green);
+  }
+
+  .tl-badge.past {
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--cyan);
+  }
+
+  .tl-company {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tl-company::before {
+    content: '▸';
+    color: rgba(0,229,255,0.4);
+    font-size: 10px;
+  }
+
+  .tl-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tl-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13px;
+    color: #8dbfd8;
+    line-height: 1.55;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .tl-item.visible .tl-bullets li { opacity: 1; transform: translateX(0); }
+  .tl-item.visible .tl-bullets li:nth-child(1){ transition-delay:0.15s; }
+  .tl-item.visible .tl-bullets li:nth-child(2){ transition-delay:0.25s; }
+  .tl-item.visible .tl-bullets li:nth-child(3){ transition-delay:0.35s; }
+  .tl-item.visible .tl-bullets li:nth-child(4){ transition-delay:0.45s; }
+  .tl-item.visible .tl-bullets li:nth-child(5){ transition-delay:0.55s; }
+  .tl-item.visible .tl-bullets li:nth-child(6){ transition-delay:0.65s; }
+
+  .tl-bullets li::before {
+    content: '◆';
+    font-size: 7px;
+    color: var(--cyan);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .tl-item.past .tl-bullets li::before { color: var(--green); }
+
+  /* ── CI/CD PIPELINE ANIMATION ── */
+  .pipeline-widget {
+    background: rgba(0,8,20,0.8);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 4px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pipeline-widget::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--cyan), var(--blue));
+  }
+
+  .pipeline-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: rgba(0,229,255,0.5);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .pipeline-stages {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .pipe-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 72px;
+  }
+
+  .pipe-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    border: 1px solid;
+    position: relative;
+  }
+
+  .pipe-icon.done {
+    background: rgba(0,255,136,0.1);
+    border-color: rgba(0,255,136,0.4);
+    animation: stageDone 0.5s ease both;
+  }
+
+  .pipe-icon.running {
+    background: rgba(0,229,255,0.1);
+    border-color: rgba(0,229,255,0.5);
+    animation: stageRun 1.2s ease-in-out infinite;
+  }
+
+  .pipe-icon.pending {
+    background: rgba(100,100,120,0.1);
+    border-color: rgba(100,100,120,0.3);
+    opacity: 0.4;
+  }
+
+  @keyframes stageDone {
+    from{ transform: scale(0.8); opacity: 0; }
+    to{ transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes stageRun {
+    0%,100%{ box-shadow: 0 0 0 rgba(0,229,255,0); }
+    50%{ box-shadow: 0 0 12px rgba(0,229,255,0.6); }
+  }
+
+  .pipe-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  .pipe-arrow {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(0,229,255,0.4), rgba(0,229,255,0.1));
+    position: relative;
+    min-width: 10px;
+    margin-bottom: 24px;
+  }
+
+  .pipe-arrow .arrow-dot {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: arrowDot 2s linear infinite;
+    left: 0;
+  }
+
+  @keyframes arrowDot {
+    from{ left: 0; opacity: 1; }
+    to{ left: 100%; opacity: 0; }
+  }
+
+  /* ── SKILL BARS ── */
+  .skill-bar-group { margin-bottom: 10px; }
+
+  .skill-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+  }
+
+  .skill-bar-name { color: #9fc8e0; }
+  .skill-bar-pct { color: var(--cyan); }
+
+  .skill-bar-track {
+    height: 5px;
+    background: rgba(0,229,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    width: 0;
+    transition: width 1.4s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .skill-bar-fill.cyan  { background: linear-gradient(90deg, rgba(0,229,255,0.4), var(--cyan)); }
+  .skill-bar-fill.green { background: linear-gradient(90deg, rgba(0,255,136,0.4), var(--green)); }
+  .skill-bar-fill.blue  { background: linear-gradient(90deg, rgba(30,144,255,0.4), var(--blue)); }
+  .skill-bar-fill.orange{ background: linear-gradient(90deg, rgba(255,149,0,0.4), var(--orange)); }
+
+  /* ── GENERAL ANIMATIONS ── */
+  .page > * {
+    animation: fadeUp 0.5s ease both;
+  }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* ── SCAN LINE ── */
@@ -867,41 +1469,78 @@
 <!-- ════════════════════════════════ PAGE ════════════════════════════════ -->
 <div class="page">
 
-  <!-- ── HERO ── -->
+  <!-- ── ANIMATED PROFILE HERO ── -->
   <div class="hero">
-    <div class="hero-corner">SYS://RESUME_v2.4.1</div>
 
-    <div class="avatar-wrap">
-      <div class="avatar-ring"></div>
-      <div class="avatar-img">BP</div>
+    <div class="hero-banner">
+      <div class="hero-corner">SYS://RESUME_v2.4.1 &nbsp;|&nbsp; ACTIVE</div>
+
+      <!-- Animated Avatar -->
+      <div class="avatar-system">
+        <div class="orbit-ring orbit-ring-1"></div>
+        <div class="orbit-ring orbit-ring-2"></div>
+        <div class="orbit-dot orbit-dot-1"></div>
+        <div class="orbit-dot orbit-dot-2"></div>
+        <div class="orbit-dot orbit-dot-3"></div>
+        <div class="avatar-core">BP</div>
+      </div>
+
+      <!-- Name + Status -->
+      <div class="hero-text">
+        <div class="hero-name" id="typed-name">&nbsp;<span class="typed-cursor"></span></div>
+        <div class="status-row">
+          <span class="status-pill active"><span class="status-dot"></span>OPEN TO WORK</span>
+          <span class="status-pill role">DevOps Engineer</span>
+          <span class="status-pill role">HW &amp; Network Eng.</span>
+        </div>
+        <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:14px;">
+          <span style="font-size:12.5px;color:var(--muted);font-family:'Share Tech Mono',monospace;">
+            📅 &nbsp;29 July 1999
+          </span>
+          <span style="font-size:12.5px;color:var(--muted);font-family:'Share Tech Mono',monospace;">
+            📍 &nbsp;Bengaluru, India
+          </span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="stat-box">
+          <span class="stat-num" id="stat-exp">0</span>
+          <span class="stat-label">Years Experience</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num green" id="stat-tools">0</span>
+          <span class="stat-label">DevOps Tools</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num orange" id="stat-skills">0</span>
+          <span class="stat-label">Core Skills</span>
+        </div>
+      </div>
     </div>
 
-    <div class="hero-text">
-      <h1>Bala Prabhakar <span>B</span></h1>
-      <div class="hero-title-tag">
-        <span class="dot"></span>
-        DevOps Engineer &nbsp;|&nbsp; Hardware &amp; Network Engineer
+    <!-- Meta bar -->
+    <div class="hero-meta-bar">
+      <div class="meta-chip">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:balaprabhaka9@gmail.com">balaprabhaka9@gmail.com</a>
       </div>
-      <div class="hero-meta">
-        <span class="meta-item">
-          <svg width="14" height="14" fill="none" stroke="#6a9fc0" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          29 July 1999
-        </span>
-        <span class="meta-item">
-          <svg width="14" height="14" fill="none" stroke="#6a9fc0" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="mailto:balaprabhaka9@gmail.com">balaprabhaka9@gmail.com</a>
-        </span>
-        <span class="meta-item">
-          <svg width="14" height="14" fill="none" stroke="#6a9fc0" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          8098400749
-        </span>
-        <span class="meta-item">
-          <svg width="14" height="14" fill="none" stroke="#6a9fc0" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-          Bengaluru, India
-        </span>
+      <div class="meta-chip">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +91 8098400749
+      </div>
+      <div class="meta-chip">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        Tamil &nbsp;·&nbsp; Kannada &nbsp;·&nbsp; English
+      </div>
+      <div class="meta-chip" style="margin-left:auto;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+        ♟ Chess
       </div>
     </div>
-  </div>
+
+  </div><!-- end hero -->
 
   <!-- ── TWO COLUMNS ── -->
   <div class="two-col">
@@ -919,40 +1558,92 @@
         </p>
       </div>
 
-      <!-- Experience -->
-      <div class="card accent-blue">
+      <!-- CI/CD Pipeline Animation -->
+      <div class="pipeline-widget scroll-reveal">
+        <div class="pipeline-title">// LIVE CI/CD PIPELINE — BUILD #247</div>
+        <div class="pipeline-stages" id="pipeline-stages">
+          <div class="pipe-stage">
+            <div class="pipe-icon done" id="ps-source">📁</div>
+            <span class="pipe-label">SOURCE</span>
+          </div>
+          <div class="pipe-arrow"><div class="arrow-dot"></div></div>
+          <div class="pipe-stage">
+            <div class="pipe-icon pending" id="ps-build">🔨</div>
+            <span class="pipe-label">BUILD</span>
+          </div>
+          <div class="pipe-arrow"><div class="arrow-dot" style="animation-delay:0.5s"></div></div>
+          <div class="pipe-stage">
+            <div class="pipe-icon pending" id="ps-test">🧪</div>
+            <span class="pipe-label">TEST</span>
+          </div>
+          <div class="pipe-arrow"><div class="arrow-dot" style="animation-delay:1s"></div></div>
+          <div class="pipe-stage">
+            <div class="pipe-icon pending" id="ps-docker">🐳</div>
+            <span class="pipe-label">DOCKER</span>
+          </div>
+          <div class="pipe-arrow"><div class="arrow-dot" style="animation-delay:1.5s"></div></div>
+          <div class="pipe-stage">
+            <div class="pipe-icon pending" id="ps-deploy">🚀</div>
+            <span class="pipe-label">DEPLOY</span>
+          </div>
+          <div class="pipe-arrow"><div class="arrow-dot" style="animation-delay:2s"></div></div>
+          <div class="pipe-stage">
+            <div class="pipe-icon pending" id="ps-monitor">📊</div>
+            <span class="pipe-label">MONITOR</span>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-family:'Share Tech Mono',monospace;font-size:10px;color:rgba(0,229,255,0.4);" id="pipeline-log">
+          &gt; Checking out commit a3f9c2d...
+        </div>
+      </div>
+
+      <!-- Animated Experience Timeline -->
+      <div class="card accent-blue scroll-reveal">
         <div class="section-label">
           <div class="line left"></div> Professional Experience <div class="line"></div>
         </div>
 
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Hardware &amp; Network Engineer</span>
-            <span class="exp-badge">2024 – Present</span>
-          </div>
-          <div class="exp-company">Vaps Knowledge Pvt Ltd · Basaweshwara Nagar, Bengaluru – 560079</div>
-          <ul class="exp-bullets">
-            <li>Hardware installation and troubleshooting</li>
-            <li>Network configuration and troubleshooting</li>
-            <li>CCTV installation, configuration, and support</li>
-            <li>Operating system installation and configuration</li>
-            <li>Printer installation and troubleshooting</li>
-            <li>Windows Server administration (AD, Group Policies, DHCP, Shared Folders)</li>
-          </ul>
-        </div>
+        <div class="exp-timeline">
+          <div class="timeline-axis"></div>
 
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Network Engineer</span>
-            <span class="exp-badge">2022 – 2024</span>
+          <!-- Job 1 -->
+          <div class="tl-item current" id="tl-0">
+            <div class="tl-node current"><div class="tl-node-inner"></div></div>
+            <div class="tl-body">
+              <div class="tl-header">
+                <span class="tl-role">Hardware &amp; Network Engineer</span>
+                <span class="tl-badge active">▶ 2024 – Present</span>
+              </div>
+              <div class="tl-company">Vaps Knowledge Pvt Ltd · Basaweshwara Nagar, Bengaluru – 560079</div>
+              <ul class="tl-bullets">
+                <li>Hardware installation and troubleshooting across enterprise environments</li>
+                <li>Network configuration, diagnostics, and issue resolution</li>
+                <li>CCTV installation, configuration, and ongoing support</li>
+                <li>Operating system installation and configuration</li>
+                <li>Printer installation and troubleshooting</li>
+                <li>Windows Server administration — Active Directory, Group Policies, DHCP, Shared Folders</li>
+              </ul>
+            </div>
           </div>
-          <div class="exp-company">MEGA Byte Computers · Old Airport Road, Vimanapura, HAL, Bengaluru – 560017</div>
-          <ul class="exp-bullets">
-            <li>Managed network infrastructure and troubleshooting</li>
-            <li>Installed and configured networking devices</li>
-            <li>Supported enterprise systems and end-user environments</li>
-            <li>Maintained hardware and software systems</li>
-          </ul>
+
+          <!-- Job 2 -->
+          <div class="tl-item past" id="tl-1">
+            <div class="tl-node past"><div class="tl-node-inner"></div></div>
+            <div class="tl-body">
+              <div class="tl-header">
+                <span class="tl-role">Network Engineer</span>
+                <span class="tl-badge past">2022 – 2024</span>
+              </div>
+              <div class="tl-company">MEGA Byte Computers · Old Airport Road, Vimanapura, HAL, Bengaluru – 560017</div>
+              <ul class="tl-bullets">
+                <li>Managed network infrastructure and performed troubleshooting</li>
+                <li>Installed and configured networking devices and routers</li>
+                <li>Supported enterprise systems and end-user environments</li>
+                <li>Maintained hardware and software systems at scale</li>
+              </ul>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -1052,8 +1743,8 @@
         </div>
       </div>
 
-      <!-- Skills -->
-      <div class="card accent-green">
+      <!-- Skills with animated bars -->
+      <div class="card accent-green scroll-reveal">
         <div class="section-label">
           <div class="line left"></div> Core Skills <div class="line"></div>
         </div>
@@ -1096,6 +1787,35 @@
             <span class="skill-tag ops">Config Mgmt</span>
             <span class="skill-tag ops">Infrastructure Mon.</span>
             <span class="skill-tag ops">Task Automation</span>
+          </div>
+        </div>
+
+        <!-- Animated skill bars -->
+        <div style="margin-top:20px;border-top:1px solid rgba(0,229,255,0.12);padding-top:16px;">
+          <div class="skill-group-title" style="margin-bottom:14px;">Proficiency</div>
+          <div class="skill-bar-group">
+            <div class="skill-bar-header"><span class="skill-bar-name">Network Engineering</span><span class="skill-bar-pct">90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill cyan" data-width="90"></div></div>
+          </div>
+          <div class="skill-bar-group">
+            <div class="skill-bar-header"><span class="skill-bar-name">Hardware Support</span><span class="skill-bar-pct">88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill blue" data-width="88"></div></div>
+          </div>
+          <div class="skill-bar-group">
+            <div class="skill-bar-header"><span class="skill-bar-name">Docker &amp; Kubernetes</span><span class="skill-bar-pct">75%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-width="75"></div></div>
+          </div>
+          <div class="skill-bar-group">
+            <div class="skill-bar-header"><span class="skill-bar-name">CI/CD (Jenkins/GH Actions)</span><span class="skill-bar-pct">78%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill cyan" data-width="78"></div></div>
+          </div>
+          <div class="skill-bar-group">
+            <div class="skill-bar-header"><span class="skill-bar-name">Ansible / Automation</span><span class="skill-bar-pct">72%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill orange" data-width="72"></div></div>
+          </div>
+          <div class="skill-bar-group">
+            <div class="skill-bar-header"><span class="skill-bar-name">Monitoring (Prometheus/Grafana)</span><span class="skill-bar-pct">70%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-width="70"></div></div>
           </div>
         </div>
       </div>
@@ -1182,5 +1902,130 @@
 
 </div><!-- end page -->
 
+<script>
+// ── TYPEWRITER NAME ─────────────────────────────────────────────────
+(function(){
+  const el = document.getElementById('typed-name');
+  const fullText = 'BALA PRABHAKAR B';
+  const cyan = [14, 15]; // chars to colour cyan
+  let i = 0;
+  function type(){
+    if(i <= fullText.length){
+      let html = '';
+      for(let k=0; k<i; k++){
+        const ch = fullText[k];
+        if(k === 14) html += '<span class="cyan">' + ch;
+        else html += ch;
+      }
+      if(i === 16) html += '</span>';
+      el.innerHTML = html + '<span class="typed-cursor"></span>';
+      i++;
+      setTimeout(type, i < 5 ? 60 : 85);
+    }
+  }
+  setTimeout(type, 500);
+})();
+
+// ── COUNTER ANIMATION ────────────────────────────────────────────────
+function animateCount(id, target, duration){
+  const el = document.getElementById(id);
+  if(!el) return;
+  let start = null;
+  function step(ts){
+    if(!start) start = ts;
+    const prog = Math.min((ts - start) / duration, 1);
+    el.textContent = Math.round(prog * target) + (id === 'stat-exp' ? '+' : '+');
+    if(prog < 1) requestAnimationFrame(step);
+    else el.textContent = target + '+';
+  }
+  requestAnimationFrame(step);
+}
+setTimeout(()=>{
+  animateCount('stat-exp', 3, 1200);
+  animateCount('stat-tools', 7, 1400);
+  animateCount('stat-skills', 18, 1600);
+}, 800);
+
+// ── SCROLL REVEAL ────────────────────────────────────────────────────
+function checkReveal(){
+  // scroll-reveal cards
+  document.querySelectorAll('.scroll-reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 60){
+      el.classList.add('visible');
+    }
+  });
+
+  // timeline items
+  document.querySelectorAll('.tl-item').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 40){
+      el.classList.add('visible');
+    }
+  });
+
+  // skill bars
+  document.querySelectorAll('.skill-bar-fill').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight + 100 && !el.dataset.animated){
+      el.dataset.animated = '1';
+      setTimeout(()=>{ el.style.width = el.dataset.width + '%'; }, 200);
+    }
+  });
+}
+
+// initial reveal on load
+setTimeout(checkReveal, 400);
+window.addEventListener('scroll', checkReveal, {passive:true});
+
+// ── CI/CD PIPELINE ANIMATION ─────────────────────────────────────────
+(function(){
+  const stages = [
+    {id:'ps-source', log:'> Checking out commit a3f9c2d...'},
+    {id:'ps-build',  log:'> Building Docker image layer 3/7...'},
+    {id:'ps-test',   log:'> Running unit tests — 42 passed, 0 failed'},
+    {id:'ps-docker', log:'> Pushing image to registry: bp/devops:247'},
+    {id:'ps-deploy', log:'> Deploying to K8s cluster — rolling update...'},
+    {id:'ps-monitor',log:'> Prometheus targets healthy ✓  Grafana OK ✓'},
+  ];
+  const logEl = document.getElementById('pipeline-log');
+  let current = 0;
+
+  function advance(){
+    if(current >= stages.length) {
+      // reset after a pause
+      setTimeout(()=>{
+        stages.forEach(s=>{
+          const el = document.getElementById(s.id);
+          if(el){ el.className = 'pipe-icon pending'; }
+        });
+        logEl.textContent = '> Starting new build #' + (248 + Math.floor(Math.random()*5)) + '...';
+        current = 0;
+        setTimeout(advance, 1000);
+      }, 3000);
+      return;
+    }
+
+    const stage = stages[current];
+    const el = document.getElementById(stage.id);
+    if(el){
+      el.className = 'pipe-icon running';
+      logEl.textContent = stage.log;
+      setTimeout(()=>{
+        el.className = 'pipe-icon done';
+        current++;
+        setTimeout(advance, 900);
+      }, 1200);
+    }
+  }
+
+  // start after 1s
+  setTimeout(()=>{
+    document.getElementById('ps-source').className = 'pipe-icon done';
+    current = 1;
+    setTimeout(advance, 600);
+  }, 1000);
+})();
+</script>
 </body>
 </html>
