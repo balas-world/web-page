@@ -1,0 +1,19 @@
+@page
+@model SimpleWebApp.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Welcome to SimpleWebApp</h1>
+<p>This is a minimal ASP.NET Core Razor Pages app.</p>
+
+<form method="post">
+    <label for="Name">Enter your name:</label>
+    <input type="text" id="Name" asp-for="Name" placeholder="Your name" />
+    <button type="submit">Say hello</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Greeting))
+{
+    <p class="greeting">@Model.Greeting</p>
+}
